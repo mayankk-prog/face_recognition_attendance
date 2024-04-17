@@ -20,6 +20,7 @@ firebase_admin.initialize_app(cred, {
 })
 
 bucket = storage.bucket()
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
 cap = cv2.VideoCapture(0)
 cap.set(3, 640)
@@ -83,6 +84,13 @@ while True:
                 blob= bucket.blob(f'Images/{id}.jpg')
                 array= np.frombuffer(blob.download_as_string(), np.uint8)
                 imgStudent = cv2.imdecode(array, cv2.COLOR_BGRA2BGR)
+
+                gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+                faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+                for (x, y, w, h) in faces:
+                    cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
+                    print("Face detected at coordinates: (x={}, y={}, w={}, h={})".format(x, y, w, h))
 
                 datetimeobject= datetime.strptime(studentInfo['last_attendance_time'],"%Y-%m-%d %H:%M:%S")
                 secondsElapsed=(datetime.now()-datetimeobject).total_seconds()
