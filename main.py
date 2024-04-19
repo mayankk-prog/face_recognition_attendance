@@ -90,7 +90,20 @@ while True:
                 faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
                 for (x, y, w, h) in faces:
                     cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
-                    print("Face detected at coordinates: (x={}, y={}, w={}, h={})".format(x, y, w, h))
+                    print("Face detected at coordinates: (x={}, y={}, w={}, h={})".format(int(x), int(y), int(w), int(h)))
+                studentInfo['x'] = int(x)  # Convert x coordinate to int
+                studentInfo['y'] = int(y)  # Convert y coordinate to int
+                studentInfo['w'] = int(w)  # Convert width to int
+                studentInfo['h'] = int(h)  # Convert height to int
+
+                # Update the 'x', 'y', 'w', and 'h' values in the Firebase database
+                ref = db.reference(f'Students/{id}')
+                ref.update({
+                    "x": studentInfo['x'],
+                    "y": studentInfo['y'],
+                    "w": studentInfo['w'],
+                    "h": studentInfo['h']
+                })
 
                 datetimeobject= datetime.strptime(studentInfo['last_attendance_time'],"%Y-%m-%d %H:%M:%S")
                 secondsElapsed=(datetime.now()-datetimeobject).total_seconds()
