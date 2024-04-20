@@ -18,7 +18,11 @@ data = {
             "id": 123,
             "gender": "Male",
             "total_attendance": 23,
-            "last_attendance_time": "2024-04-24 00:00:00"
+            "last_attendance_time": "2024-04-24 00:00:00",
+            "x": 1,
+            "y": 1,
+            "w": 1,
+            "h": 1
         },
     "456":
         {
@@ -27,7 +31,11 @@ data = {
             "id": 456,
             "gender": "Male",
             "total_attendance": 0,
-            "last_attendace_time": "2024-04-24 00:00:00"
+            "last_attendace_time": "2024-04-24 00:00:00",
+            "x": 1,
+            "y": 1,
+            "w": 1,
+            "h": 1
         }
 }
 
